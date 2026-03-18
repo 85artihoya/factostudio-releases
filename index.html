@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>팩토스튜디오 FACTO Studio — 교육용 자동화 플랫폼</title>
+  <meta name="description" content="PLC 카드 코딩으로 로봇팔, 컨베이어, 카메라를 제어하는 교육용 자동화 플랫폼">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blue: #3B82F6;
+      --pink: #EC4899;
+      --green: #10B981;
+      --bg: #0F1117;
+      --bg-card: #1A1D2E;
+      --bg-card-hover: #222640;
+      --text: #E5E7EB;
+      --text-dim: #9CA3AF;
+      --border: #2D3148;
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--blue); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.85; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(15, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    nav .logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    nav .logo span { color: var(--blue); }
+    nav .nav-links { display: flex; gap: 28px; }
+    nav .nav-links a { color: var(--text-dim); font-size: 14px; font-weight: 500; }
+    nav .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 160px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .hero h1 .accent-blue { color: var(--blue); }
+    .hero h1 .accent-pink { color: var(--pink); }
+    .hero .subtitle {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--text-dim);
+      max-width: 620px;
+      margin: 20px auto 40px;
+      line-height: 1.6;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 4px 24px rgba(59,130,246,0.3);
+    }
+    .btn-primary:hover { box-shadow: 0 6px 32px rgba(59,130,246,0.4); color: #fff; }
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .btn-secondary:hover { transform: none; }
+    .btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+    /* ── Section ── */
+    section { padding: 80px 0; }
+    .section-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      color: var(--text-dim);
+      font-size: 17px;
+      max-width: 560px;
+      margin-bottom: 48px;
+    }
+
+    /* ── Features ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .feature-card:hover {
+      border-color: rgba(59,130,246,0.4);
+      transform: translateY(-4px);
+    }
+    .feature-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .feature-card:nth-child(1) .feature-icon { background: rgba(59,130,246,0.15); }
+    .feature-card:nth-child(2) .feature-icon { background: rgba(236,72,153,0.15); }
+    .feature-card:nth-child(3) .feature-icon { background: rgba(16,185,129,0.15); }
+    .feature-card:nth-child(4) .feature-icon { background: rgba(168,85,247,0.15); }
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+
+    /* ── Screenshots ── */
+    .screenshots-area {
+      background: var(--bg-card);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 80px 40px;
+      text-align: center;
+      color: var(--text-dim);
+    }
+    .screenshots-area .placeholder-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    .screenshots-area p { font-size: 15px; }
+
+    /* ── Requirements ── */
+    .req-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .req-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .req-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .req-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .req-card li {
+      font-size: 14px;
+      color: var(--text-dim);
+      padding-left: 20px;
+      position: relative;
+    }
+    .req-card li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .req-card li.coming-soon::before { background: var(--text-dim); }
+    .badge-soon {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(156,163,175,0.15);
+      color: var(--text-dim);
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-left: 6px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+    }
+    footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer .copyright {
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+    footer .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    footer .footer-links a {
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+    footer .footer-links a:hover { color: var(--text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero { padding: 130px 0 60px; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .btn { width: 100%; max-width: 300px; justify-content: center; }
+      nav .nav-links { gap: 16px; }
+      nav .nav-links a { font-size: 13px; }
+      section { padding: 60px 0; }
+      footer .container { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <div class="logo"><span>FACTO</span> Studio</div>
+      <div class="nav-links">
+        <a href="#features">기능</a>
+        <a href="#screenshots">스크린샷</a>
+        <a href="#requirements">시스템 요구사항</a>
+        <a href="https://github.com/85artihoya/factostudio-releases">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">v1.0.0 &mdash; Open Beta</div>
+      <h1>
+        <span class="accent-blue">팩토스튜디오</span><br>
+        <span class="accent-pink">FACTO</span> Studio
+      </h1>
+      <p class="subtitle">
+        교육용 자동화 플랫폼 &mdash; PLC 카드 코딩으로<br>
+        로봇팔, 컨베이어, 카메라를 제어하세요
+      </p>
+      <div class="hero-buttons">
+        <a href="https://github.com/85artihoya/factostudio-releases/releases/download/v1.0.0/팩토스튜디오-1.0.0.dmg" class="btn btn-primary">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          macOS 다운로드
+        </a>
+        <button class="btn btn-secondary" disabled>
+          <svg viewBox="0 0 24 24"><path d="M3 12l2.67-2.67L3 6.67h8V3l10 9-10 9v-3.67H3z" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="0" y="3" width="24" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11.5 3v8.5H3m8.5 0H21m-9.5 0v9" stroke="currentColor" stroke-width="1.2"/></svg>
+          Windows <span class="badge-soon">Coming Soon</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="container">
+      <div class="section-label">Features</div>
+      <h2 class="section-title">코딩부터 실물 제어까지, 하나의 플랫폼</h2>
+      <p class="section-desc">
+        초등학생부터 중학생까지, 단계별 학습 경로로 자동화의 핵심을 배울 수 있습니다.
+      </p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F9E9;</div>
+          <h3>PLC 카드 코딩</h3>
+          <p>드래그앤드롭으로 47종 카드를 조합하여 자동화 흐름을 설계합니다. 4단계 해금 시스템으로 차근차근 학습할 수 있습니다.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F916;</div>
+          <h3>AI 어시스턴트</h3>
+          <p>자연어로 원하는 동작을 설명하면 블록을 자동 생성합니다. AI 디버깅으로 오류도 쉽게 해결하세요.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4F7;</div>
+          <h3>AI 비전 스튜디오</h3>
+          <p>TensorFlow.js 기반 이미지 분류 모델을 직접 학습하고, 실시간 카메라로 물체를 분류할 수 있습니다.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4DD;</div>
+          <h3>IEC 61131-3 ST</h3>
+          <p>산업 표준 PLC 언어인 구조화 텍스트(ST)를 블록과 함께 학습합니다. CODESYS, TIA Portal 포맷으로 내보내기 가능합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section id="screenshots">
+    <div class="container">
+      <div class="section-label">Screenshots</div>
+      <h2 class="section-title">한눈에 보는 팩토스튜디오</h2>
+      <p class="section-desc">
+        카드 에디터, ST 코드 뷰어, 실시간 모니터링 화면을 확인하세요.
+      </p>
+      <div class="screenshots-area">
+        <div class="placeholder-icon">&#x1F5BC;</div>
+        <p>앱 스크린샷이 이곳에 표시됩니다</p>
+        <p style="font-size:13px; margin-top:8px; opacity:0.6;">screenshots/app-main.png, screenshots/st-editor.png</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- System Requirements -->
+  <section id="requirements">
+    <div class="container">
+      <div class="section-label">System Requirements</div>
+      <h2 class="section-title">시스템 요구사항</h2>
+      <p class="section-desc">
+        시뮬레이션 모드로 하드웨어 없이도 모든 기능을 체험할 수 있습니다.
+      </p>
+      <div class="req-grid">
+        <div class="req-card">
+          <h3>&#x1F4BB; 소프트웨어</h3>
+          <ul>
+            <li>macOS 12 Monterey 이상 (Apple Silicon / Intel)</li>
+            <li class="coming-soon">Windows 10 / 11 <span class="badge-soon">Coming Soon</span></li>
+            <li>디스크 공간 500MB 이상</li>
+            <li>RAM 4GB 이상 (8GB 권장)</li>
+          </ul>
+        </div>
+        <div class="req-card">
+          <h3>&#x1F527; 하드웨어 (선택)</h3>
+          <ul>
+            <li>UFactory Lite 6 로봇팔</li>
+            <li>ESP32 + TB6600 스텝모터 컨베이어</li>
+            <li>ESP32-CAM (MJPEG 스트림)</li>
+            <li>E18-D80NK 적외선 센서</li>
+          </ul>
+        </div>
+        <div class="req-card">
+          <h3>&#x1F4E1; 네트워크</h3>
+          <ul>
+            <li>로봇: LAN 직결 (192.168.1.x)</li>
+            <li>카메라: Wi-Fi 연결</li>
+            <li>컨베이어: USB Serial</li>
+            <li>인터넷 연결 불필요 (오프라인 사용 가능)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="copyright">&copy; 2026 FACTO Studio Team. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="https://github.com/85artihoya/factostudio-releases">GitHub</a>
+        <a href="mailto:contact@example.com">Contact</a>
+        <a href="#">Documentation</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

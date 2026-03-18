@@ -340,7 +340,7 @@
         로봇팔, 컨베이어, 카메라를 제어하세요
       </p>
       <div class="hero-buttons">
-        <a href="https://github.com/85artihoya/factostudio-releases/releases/download/v1.0.0/팩토스튜디오-1.0.0.dmg" class="btn btn-primary">
+        <a href="https://github.com/85artihoya/factostudio-releases/releases/download/v1.0.0/FactoStudio-1.0.0.dmg" class="btn btn-primary">
           <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
           macOS 다운로드
         </a>
@@ -393,10 +393,86 @@
       <p class="section-desc">
         카드 에디터, ST 코드 뷰어, 실시간 모니터링 화면을 확인하세요.
       </p>
-      <div class="screenshots-area">
-        <div class="placeholder-icon">&#x1F5BC;</div>
-        <p>앱 스크린샷이 이곳에 표시됩니다</p>
-        <p style="font-size:13px; margin-top:8px; opacity:0.6;">screenshots/app-main.png, screenshots/st-editor.png</p>
+      <div class="screenshots-area" style="padding:40px 30px; text-align:left;">
+        <!-- 앱 구조도 — 한눈에 보는 팩토스튜디오 -->
+        <div style="display:grid; grid-template-columns:200px 1fr 220px; gap:12px; max-width:900px; margin:0 auto; font-size:13px;">
+          <!-- 헤더 -->
+          <div style="grid-column:1/-1; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); border-radius:10px; padding:10px 16px; display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-weight:700; color:#3B82F6;">팩토스튜디오</span>
+            <div style="display:flex; gap:8px;">
+              <span style="background:rgba(59,130,246,0.2); padding:3px 10px; border-radius:6px; font-size:11px; color:#93C5FD;">블록</span>
+              <span style="background:rgba(139,92,246,0.2); padding:3px 10px; border-radius:6px; font-size:11px; color:#C4B5FD;">ST 코드</span>
+              <span style="background:rgba(236,72,153,0.2); padding:3px 10px; border-radius:6px; font-size:11px; color:#F9A8D4;">AI 비전</span>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <span style="background:#22C55E; width:8px; height:8px; border-radius:50%; display:inline-block;"></span>
+              <span style="font-size:11px; color:#86EFAC;">▶ 실행</span>
+              <span style="background:#EF4444; width:24px; height:16px; border-radius:4px; display:inline-block; font-size:9px; color:white; text-align:center; line-height:16px;">E-STOP</span>
+            </div>
+          </div>
+          <!-- 좌: 팔레트 -->
+          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px;">
+            <div style="font-size:11px; font-weight:700; color:#9CA3AF; margin-bottom:8px;">팩토블록 팔레트</div>
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <div style="background:rgba(107,114,128,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #6B7280;">① 흐름 제어</div>
+              <div style="background:rgba(13,148,136,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #0D9488;">② 입력</div>
+              <div style="background:rgba(59,130,246,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #3B82F6;">③ 출력</div>
+              <div style="background:rgba(245,158,11,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #F59E0B;">④ 조건/분기</div>
+              <div style="background:rgba(16,185,129,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #10B981;">⑤ 타이머</div>
+              <div style="background:rgba(139,92,246,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #8B5CF6;">⑥ 변수</div>
+              <div style="background:rgba(167,139,250,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #A78BFA;">⑦ 서브루틴</div>
+              <div style="background:rgba(236,72,153,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #EC4899;">⑧ AI 비전</div>
+            </div>
+          </div>
+          <!-- 중: 캔버스 -->
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px;">
+            <div style="font-size:11px; font-weight:700; color:#9CA3AF; margin-bottom:8px;">팩토조립소 — 플로우 캔버스</div>
+            <div style="display:flex; flex-direction:column; gap:3px; padding-left:12px; border-left:2px solid rgba(59,130,246,0.3);">
+              <div style="background:rgba(107,114,128,0.3); padding:4px 10px; border-radius:12px; font-size:11px; width:fit-content;">▶ 시작</div>
+              <div style="background:rgba(59,130,246,0.2); padding:4px 10px; border-radius:5px; font-size:11px; border-left:3px solid #3B82F6;">컨베이어 켜기</div>
+              <div style="background:rgba(13,148,136,0.2); padding:4px 10px; border-radius:5px; font-size:11px; border-left:3px solid #0D9488;">센서 감지 대기 <span style="color:#6B7280; font-size:10px;">10초</span></div>
+              <div style="background:rgba(59,130,246,0.2); padding:4px 10px; border-radius:5px; font-size:11px; border-left:3px solid #3B82F6;">컨베이어 끄기</div>
+              <div style="background:rgba(236,72,153,0.2); padding:4px 10px; border-radius:5px; font-size:11px; border-left:3px solid #EC4899;">🤖 AI 판별</div>
+              <div style="background:rgba(245,158,11,0.15); padding:4px 10px; border-radius:5px; font-size:11px; clip-path:polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%, 8px 50%); border-left:3px solid #F59E0B;">◆ 만약~이면 <span style="color:#6B7280; font-size:10px;">빨간색</span></div>
+              <div style="margin-left:16px; background:rgba(59,130,246,0.15); padding:3px 8px; border-radius:4px; font-size:10px; border-left:2px solid #3B82F6;">로봇 이동 → A 위치</div>
+              <div style="background:rgba(245,158,11,0.1); padding:3px 10px; border-radius:5px; font-size:10px; color:#F59E0B;">↔ 아니면</div>
+              <div style="margin-left:16px; background:rgba(59,130,246,0.15); padding:3px 8px; border-radius:4px; font-size:10px; border-left:2px solid #3B82F6;">로봇 이동 → B 위치</div>
+              <div style="background:rgba(245,158,11,0.1); padding:3px 10px; border-radius:5px; font-size:10px;">─ 만약~끝</div>
+              <div style="background:rgba(107,114,128,0.3); padding:4px 10px; border-radius:12px; font-size:11px; width:fit-content;">⏹ 끝</div>
+            </div>
+          </div>
+          <!-- 우: 모니터 -->
+          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px;">
+            <div style="display:flex; gap:4px; margin-bottom:8px;">
+              <span style="background:rgba(59,130,246,0.2); padding:2px 8px; border-radius:4px; font-size:10px; color:#93C5FD; border-bottom:2px solid #3B82F6;">시스템 현황</span>
+              <span style="background:rgba(139,92,246,0.1); padding:2px 8px; border-radius:4px; font-size:10px; color:#A78BFA;">AI 도우미</span>
+              <span style="background:rgba(16,185,129,0.1); padding:2px 8px; border-radius:4px; font-size:10px; color:#6EE7B7;">리포트</span>
+            </div>
+            <!-- 카메라 -->
+            <div style="background:#1a1a2e; border-radius:6px; padding:16px; text-align:center; margin-bottom:8px;">
+              <div style="font-size:20px;">📷</div>
+              <div style="font-size:9px; color:#6B7280; margin-top:4px;">카메라 뷰어</div>
+            </div>
+            <!-- 상태 -->
+            <div style="background:rgba(255,255,255,0.03); border-radius:6px; padding:8px; margin-bottom:6px; font-size:10px;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <span style="color:#9CA3AF;">실행 상태</span>
+                <span style="color:#22C55E;">● 대기</span>
+              </div>
+              <div style="display:flex; gap:4px;">
+                <span style="color:#22C55E; font-size:9px;">● 로봇</span>
+                <span style="color:#3B82F6; font-size:9px;">● ESP32</span>
+                <span style="color:#8B5CF6; font-size:9px;">● 카메라</span>
+              </div>
+            </div>
+            <!-- AI 채팅 미리보기 -->
+            <div style="background:rgba(139,92,246,0.1); border-radius:6px; padding:8px; font-size:10px;">
+              <div style="color:#A78BFA; font-weight:600; margin-bottom:4px;">🤖 AI 도우미</div>
+              <div style="background:rgba(59,130,246,0.3); padding:4px 8px; border-radius:8px; color:#BFDBFE; font-size:9px; margin-bottom:3px; text-align:right;">물체를 색깔별로 분류해줘</div>
+              <div style="background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:8px; color:#D1D5DB; font-size:9px;">블록을 생성했습니다! 🧩</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

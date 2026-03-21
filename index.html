@@ -3,22 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>팩토스튜디오 FACTO Studio — 교육용 자동화 플랫폼</title>
-  <meta name="description" content="PLC 카드 코딩으로 로봇팔, 컨베이어, 카메라를 제어하는 교육용 자동화 플랫폼">
+  <title>팩토스튜디오 FACTO Studio — 피지컬 AI 통합 플랫폼</title>
+  <meta name="description" content="AI가 판단하고, 로봇이 행동한다. 카드 코딩부터 AI 비전, 노드 워크플로우까지 — 피지컬 AI 교육의 새로운 기준">
+  <meta property="og:title" content="팩토스튜디오 — 피지컬 AI 통합 플랫폼">
+  <meta property="og:description" content="AI가 판단하고, 로봇이 행동한다. 카드 코딩부터 AI 비전, 노드 워크플로우까지.">
+  <meta property="og:type" content="website">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --blue: #3B82F6;
+      --indigo: #6366F1;
+      --violet: #8B5CF6;
       --pink: #EC4899;
       --green: #10B981;
-      --bg: #0F1117;
-      --bg-card: #1A1D2E;
-      --bg-card-hover: #222640;
+      --amber: #F59E0B;
+      --cyan: #06B6D4;
+      --rose: #F43F5E;
+      --bg: #0A0B10;
+      --bg-subtle: #0F1117;
+      --bg-card: #151823;
+      --bg-card-hover: #1C2033;
       --text: #E5E7EB;
       --text-dim: #9CA3AF;
-      --border: #2D3148;
+      --text-muted: #6B7280;
+      --border: #1E2235;
+      --border-hover: #2D3148;
       --radius: 16px;
+      --radius-sm: 10px;
     }
 
     html { scroll-behavior: smooth; }
@@ -29,285 +41,318 @@
       color: var(--text);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     a { color: var(--blue); text-decoration: none; transition: opacity 0.2s; }
     a:hover { opacity: 0.85; }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
 
     /* ── Nav ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(15, 17, 23, 0.85);
-      backdrop-filter: blur(12px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10, 11, 16, 0.8);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
     nav .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
+      display: flex; align-items: center; justify-content: space-between; height: 60px;
     }
-    nav .logo {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-    nav .logo span { color: var(--blue); }
-    nav .nav-links { display: flex; gap: 28px; }
-    nav .nav-links a { color: var(--text-dim); font-size: 14px; font-weight: 500; }
-    nav .nav-links a:hover { color: var(--text); }
+    .logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; }
+    .logo span { background: linear-gradient(135deg, var(--blue), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { color: var(--text-dim); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
 
-    /* ── Hero ── */
-    .hero {
-      padding: 160px 0 100px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -200px; left: 50%; transform: translateX(-50%);
-      width: 800px; height: 800px;
-      background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-badge {
-      display: inline-block;
-      padding: 6px 16px;
-      background: rgba(59,130,246,0.12);
-      border: 1px solid rgba(59,130,246,0.25);
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--blue);
-      margin-bottom: 28px;
-    }
-    .hero h1 {
-      font-size: clamp(36px, 6vw, 60px);
-      font-weight: 800;
-      letter-spacing: -1.5px;
-      line-height: 1.15;
-      margin-bottom: 8px;
-    }
-    .hero h1 .accent-blue { color: var(--blue); }
-    .hero h1 .accent-pink { color: var(--pink); }
-    .hero .subtitle {
-      font-size: clamp(16px, 2.5vw, 20px);
-      color: var(--text-dim);
-      max-width: 620px;
-      margin: 20px auto 40px;
-      line-height: 1.6;
-    }
-    .hero-buttons {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+    /* ── Buttons ── */
     .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 12px;
+      font-size: 15px; font-weight: 600; border: none; cursor: pointer;
       transition: transform 0.15s, box-shadow 0.2s;
     }
     .btn:hover { transform: translateY(-2px); }
     .btn-primary {
-      background: var(--blue);
-      color: #fff;
-      box-shadow: 0 4px 24px rgba(59,130,246,0.3);
+      background: linear-gradient(135deg, var(--blue), var(--indigo));
+      color: #fff; box-shadow: 0 4px 24px rgba(59,130,246,0.25);
     }
-    .btn-primary:hover { box-shadow: 0 6px 32px rgba(59,130,246,0.4); color: #fff; }
-    .btn-secondary {
-      background: var(--bg-card);
-      color: var(--text-dim);
-      border: 1px solid var(--border);
-      cursor: not-allowed;
-      opacity: 0.6;
+    .btn-primary:hover { box-shadow: 0 8px 32px rgba(59,130,246,0.35); color: #fff; }
+    .btn-outline {
+      background: transparent; color: var(--text-dim);
+      border: 1px solid var(--border-hover);
     }
-    .btn-secondary:hover { transform: none; }
-    .btn svg { width: 20px; height: 20px; fill: currentColor; }
+    .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+    .btn svg { width: 18px; height: 18px; fill: currentColor; }
+    .btn-sm { padding: 10px 20px; font-size: 13px; border-radius: 10px; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 160px 0 100px; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute;
+      top: -300px; left: 50%; transform: translateX(-50%);
+      width: 1000px; height: 1000px;
+      background: radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, rgba(59,130,246,0.06) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 18px; margin-bottom: 32px;
+      background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 100px; font-size: 13px; font-weight: 600; color: var(--indigo);
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+    }
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 64px); font-weight: 900;
+      letter-spacing: -2px; line-height: 1.1; margin-bottom: 12px;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(135deg, var(--blue), var(--violet), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero .tagline {
+      font-size: clamp(18px, 2.5vw, 24px); font-weight: 600;
+      color: var(--text-dim); margin-bottom: 8px;
+    }
+    .hero .subtitle {
+      font-size: 16px; color: var(--text-muted);
+      max-width: 600px; margin: 0 auto 44px; line-height: 1.65;
+    }
+    .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Download Grid ── */
+    .download-section { padding: 0 0 80px; }
+    .download-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      max-width: 720px; margin: 0 auto;
+    }
+    .dl-card {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; border-radius: var(--radius-sm);
+      background: var(--bg-card); border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
+      color: var(--text); font-size: 13px; font-weight: 600;
+    }
+    .dl-card:hover { border-color: var(--blue); transform: translateY(-2px); color: var(--text); }
+    .dl-card svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
+    .dl-card .dl-info { display: flex; flex-direction: column; }
+    .dl-card .dl-sub { font-size: 10px; font-weight: 400; color: var(--text-muted); margin-top: 1px; }
 
     /* ── Section ── */
-    section { padding: 80px 0; }
+    section { padding: 100px 0; }
     .section-label {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--blue);
-      margin-bottom: 12px;
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 2.5px; margin-bottom: 12px;
     }
+    .section-label.blue { color: var(--blue); }
+    .section-label.violet { color: var(--violet); }
+    .section-label.green { color: var(--green); }
+    .section-label.pink { color: var(--pink); }
+    .section-label.amber { color: var(--amber); }
     .section-title {
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 800;
-      letter-spacing: -0.8px;
-      margin-bottom: 16px;
+      font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+      letter-spacing: -1px; margin-bottom: 16px; line-height: 1.2;
     }
     .section-desc {
-      color: var(--text-dim);
-      font-size: 17px;
-      max-width: 560px;
-      margin-bottom: 48px;
+      color: var(--text-dim); font-size: 16px;
+      max-width: 560px; margin-bottom: 48px; line-height: 1.65;
     }
 
-    /* ── Features ── */
+    /* ── Feature Cards (6-grid) ── */
     .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
     }
     .feature-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px 28px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px 26px;
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--card-accent, var(--blue)); opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .feature-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 18px;
+    }
+    .feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card .feat-tag {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 4px; margin-bottom: 10px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .feature-card p { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+
+    /* ── Visual Diagram ── */
+    .visual-section { padding: 80px 0; }
+    .visual-diagram {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 40px; max-width: 960px; margin: 0 auto;
+    }
+    .visual-title {
+      text-align: center; margin-bottom: 32px;
+    }
+    .visual-title h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .visual-title p { font-size: 13px; color: var(--text-muted); }
+    .flow-row {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      flex-wrap: wrap;
+    }
+    .flow-node {
+      padding: 14px 22px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 600; text-align: center;
+      border: 1px solid var(--border); min-width: 140px;
+    }
+    .flow-node.ai { background: rgba(139,92,246,0.12); border-color: rgba(139,92,246,0.3); color: #C4B5FD; }
+    .flow-node.hw { background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.3); color: #93C5FD; }
+    .flow-node.data { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); color: #6EE7B7; }
+    .flow-node.control { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); color: #FCD34D; }
+    .flow-arrow {
+      font-size: 18px; color: var(--text-muted);
+    }
+    .flow-sub { font-size: 10px; color: var(--text-muted); font-weight: 400; display: block; margin-top: 2px; }
+
+    /* ── Kit Showcase ── */
+    .kit-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .kit-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 24px;
       transition: border-color 0.25s, transform 0.2s;
     }
-    .feature-card:hover {
-      border-color: rgba(59,130,246,0.4);
-      transform: translateY(-4px);
+    .kit-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+    .kit-icon { font-size: 32px; margin-bottom: 14px; }
+    .kit-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .kit-card p { font-size: 12px; color: var(--text-dim); line-height: 1.6; margin-bottom: 12px; }
+    .kit-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .kit-tag {
+      font-size: 10px; font-weight: 600; padding: 3px 8px;
+      border-radius: 5px; background: rgba(59,130,246,0.1);
+      color: var(--blue); border: 1px solid rgba(59,130,246,0.15);
     }
-    .feature-icon {
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .feature-card:nth-child(1) .feature-icon { background: rgba(59,130,246,0.15); }
-    .feature-card:nth-child(2) .feature-icon { background: rgba(236,72,153,0.15); }
-    .feature-card:nth-child(3) .feature-icon { background: rgba(16,185,129,0.15); }
-    .feature-card:nth-child(4) .feature-icon { background: rgba(168,85,247,0.15); }
-    .feature-card h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .feature-card p {
-      font-size: 14px;
-      color: var(--text-dim);
-      line-height: 1.65;
-    }
+    .kit-tag.green { background: rgba(16,185,129,0.1); color: var(--green); border-color: rgba(16,185,129,0.15); }
+    .kit-tag.violet { background: rgba(139,92,246,0.1); color: var(--violet); border-color: rgba(139,92,246,0.15); }
+    .kit-tag.amber { background: rgba(245,158,11,0.1); color: var(--amber); border-color: rgba(245,158,11,0.15); }
 
-    /* ── Screenshots ── */
-    .screenshots-area {
-      background: var(--bg-card);
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      padding: 80px 40px;
-      text-align: center;
-      color: var(--text-dim);
+    /* ── Learning Path ── */
+    .path-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      position: relative;
     }
-    .screenshots-area .placeholder-icon {
-      font-size: 48px;
-      margin-bottom: 16px;
-      opacity: 0.5;
+    .path-grid::before {
+      content: ''; position: absolute;
+      top: 50%; left: 40px; right: 40px; height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--violet), var(--pink), var(--amber));
+      opacity: 0.2; z-index: 0;
     }
-    .screenshots-area p { font-size: 15px; }
+    .path-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 20px;
+      text-align: center; position: relative; z-index: 1;
+      transition: border-color 0.2s;
+    }
+    .path-card:hover { border-color: var(--border-hover); }
+    .path-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800; margin: 0 auto 12px;
+    }
+    .path-card:nth-child(1) .path-num { background: rgba(59,130,246,0.15); color: var(--blue); }
+    .path-card:nth-child(2) .path-num { background: rgba(139,92,246,0.15); color: var(--violet); }
+    .path-card:nth-child(3) .path-num { background: rgba(236,72,153,0.15); color: var(--pink); }
+    .path-card:nth-child(4) .path-num { background: rgba(245,158,11,0.15); color: var(--amber); }
+    .path-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .path-card .path-target { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+    .path-card p { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+    /* ── Stats ── */
+    .stats-row {
+      display: flex; justify-content: center; gap: 48px; padding: 48px 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      margin: 60px 0 0;
+    }
+    .stat { text-align: center; }
+    .stat .num {
+      font-size: 36px; font-weight: 900; letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat .label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
 
     /* ── Requirements ── */
     .req-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;
     }
     .req-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
     }
     .req-card h3 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 15px; font-weight: 700; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
     }
-    .req-card ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .req-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .req-card li {
-      font-size: 14px;
-      color: var(--text-dim);
-      padding-left: 20px;
-      position: relative;
+      font-size: 13px; color: var(--text-dim); padding-left: 16px; position: relative;
     }
     .req-card li::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 8px;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--green);
-    }
-    .req-card li.coming-soon::before { background: var(--text-dim); }
-    .badge-soon {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 600;
-      background: rgba(156,163,175,0.15);
-      color: var(--text-dim);
-      padding: 2px 8px;
-      border-radius: 6px;
-      margin-left: 6px;
+      content: ''; position: absolute; left: 0; top: 7px;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--green);
     }
 
     /* ── Footer ── */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 0;
+      border-top: 1px solid var(--border); padding: 48px 0;
     }
     footer .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
     }
-    footer .copyright {
-      font-size: 14px;
-      color: var(--text-dim);
+    .footer-left .footer-brand { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .footer-left .footer-brand span {
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    footer .footer-links {
-      display: flex;
-      gap: 24px;
-    }
-    footer .footer-links a {
-      font-size: 14px;
-      color: var(--text-dim);
-    }
-    footer .footer-links a:hover { color: var(--text); }
+    .footer-left .copyright { font-size: 13px; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: var(--text-dim); }
+    .footer-links a:hover { color: var(--text); }
 
     /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .kit-grid { grid-template-columns: repeat(2, 1fr); }
+      .path-grid { grid-template-columns: repeat(2, 1fr); }
+      .path-grid::before { display: none; }
+      .download-grid { grid-template-columns: 1fr; max-width: 320px; }
+    }
     @media (max-width: 640px) {
       .hero { padding: 130px 0 60px; }
       .hero-buttons { flex-direction: column; align-items: center; }
-      .btn { width: 100%; max-width: 300px; justify-content: center; }
-      nav .nav-links { gap: 16px; }
-      nav .nav-links a { font-size: 13px; }
+      .btn { width: 100%; max-width: 320px; justify-content: center; }
+      .features-grid { grid-template-columns: 1fr; }
+      .kit-grid { grid-template-columns: 1fr; }
+      .path-grid { grid-template-columns: 1fr; }
+      nav .nav-links { gap: 14px; }
+      nav .nav-links a { font-size: 12px; }
       section { padding: 60px 0; }
+      .stats-row { flex-wrap: wrap; gap: 24px; }
+      .flow-row { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); }
       footer .container { flex-direction: column; text-align: center; }
     }
   </style>
@@ -320,9 +365,10 @@
       <div class="logo"><span>FACTO</span> Studio</div>
       <div class="nav-links">
         <a href="#features">기능</a>
-        <a href="#screenshots">스크린샷</a>
-        <a href="#requirements">시스템 요구사항</a>
-        <a href="https://github.com/85artihoya/factostudio-releases">GitHub</a>
+        <a href="#workflow">워크플로우</a>
+        <a href="#kits">하드웨어 키트</a>
+        <a href="#path">학습 경로</a>
+        <a href="https://github.com/85artihoya/factostudio-releases/releases" target="_blank">GitHub</a>
       </div>
     </div>
   </nav>
@@ -330,27 +376,56 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <div class="hero-badge">v1.6.4 &mdash; Open Beta</div>
+      <div class="hero-badge">
+        <span class="dot"></span>
+        v1.6.4 &mdash; Physical AI Platform
+      </div>
       <h1>
-        <span class="accent-blue">팩토스튜디오</span><br>
-        <span class="accent-pink">FACTO</span> Studio
+        AI가 판단하고,<br>
+        <span class="grad">로봇이 행동한다</span>
       </h1>
+      <p class="tagline">피지컬 AI 통합 플랫폼 &mdash; 팩토스튜디오</p>
       <p class="subtitle">
-        교육용 자동화 플랫폼 &mdash; PLC 카드 코딩으로<br>
-        로봇팔, 컨베이어, 카메라를 제어하세요
+        카드 코딩으로 시작해 AI 비전, IEC 표준 코드, 노드 워크플로우까지.<br>
+        초등학생부터 산업 현장까지, 피지컬 AI 교육의 새로운 기준을 제시합니다.
       </p>
       <div class="hero-buttons">
-        <a href="https://github.com/85artihoya/factostudio-releases/releases/download/v1.6.4/FactoStudio-1.6.4-arm64.dmg" class="btn btn-primary">
-          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          macOS 다운로드 (Apple Silicon)
+        <a href="#download" class="btn btn-primary">
+          <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4v-2h14v2H5z"/></svg>
+          다운로드
         </a>
-        <a href="https://github.com/85artihoya/factostudio-releases/releases/download/v1.6.4/FactoStudio-1.6.4-x64.dmg" class="btn btn-primary" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
-          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          macOS 다운로드 (Intel)
+        <a href="https://github.com/85artihoya/factostudio-releases" target="_blank" class="btn btn-outline">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.23c-3.34.73-4.03-1.41-4.03-1.41-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 016.02 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.42.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58A12.01 12.01 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
         </a>
-        <a href="https://github.com/85artihoya/factostudio-releases/releases/download/v1.6.4/FactoStudio-1.6.4-setup.exe" class="btn btn-primary" style="background:linear-gradient(135deg,#0ea5e9,#3b82f6)">
+      </div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="download-section" id="download">
+    <div class="container">
+      <div class="download-grid">
+        <a href="https://github.com/85artihoya/factostudio-releases/releases/download/v1.6.4/FactoStudio-1.6.4-arm64-mac.dmg" class="dl-card">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div class="dl-info">
+            macOS (Apple Silicon)
+            <span class="dl-sub">M1 / M2 / M3 / M4</span>
+          </div>
+        </a>
+        <a href="https://github.com/85artihoya/factostudio-releases/releases/download/v1.6.4/FactoStudio-1.6.4-x64-mac.dmg" class="dl-card">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div class="dl-info">
+            macOS (Intel)
+            <span class="dl-sub">x86_64</span>
+          </div>
+        </a>
+        <a href="https://github.com/85artihoya/factostudio-releases/releases/download/v1.6.4/FactoStudio-1.6.4-setup.exe" class="dl-card">
           <svg viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" fill="currentColor"/></svg>
-          Windows 다운로드
+          <div class="dl-info">
+            Windows
+            <span class="dl-sub">Windows 10 / 11 (64-bit)</span>
+          </div>
         </a>
       </div>
     </div>
@@ -359,142 +434,228 @@
   <!-- Features -->
   <section id="features">
     <div class="container">
-      <div class="section-label">Features</div>
-      <h2 class="section-title">코딩부터 실물 제어까지, 하나의 플랫폼</h2>
+      <div class="section-label blue">Features</div>
+      <h2 class="section-title">하나의 플랫폼에서<br>AI부터 로봇 제어까지</h2>
       <p class="section-desc">
-        초등학생부터 중학생까지, 단계별 학습 경로로 자동화의 핵심을 배울 수 있습니다.
+        데이터 수집, AI 학습, 판단, 로봇 행동까지 &mdash;
+        피지컬 AI의 전체 파이프라인을 단일 환경에서 경험합니다.
       </p>
       <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F9E9;</div>
-          <h3>PLC 카드 코딩</h3>
-          <p>드래그앤드롭으로 53종 카드를 조합하여 자동화 흐름을 설계합니다. 4단계 학습 단계로 차근차근 학습할 수 있습니다.</p>
+        <!-- 1 -->
+        <div class="feature-card" style="--card-accent: var(--blue);">
+          <div class="feature-icon" style="background:rgba(59,130,246,0.12);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </div>
+          <div class="feat-tag" style="background:rgba(59,130,246,0.1); color:var(--blue);">Phase 1</div>
+          <h3>카드 코딩</h3>
+          <p>53종 블록 카드를 드래그앤드롭으로 조합합니다. IF/LOOP/WHILE 등 프로그래밍 핵심 개념을 실물 장비와 함께 학습합니다.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F916;</div>
-          <h3>AI 어시스턴트</h3>
-          <p>자연어로 원하는 동작을 설명하면 블록을 자동 생성합니다. AI 디버깅으로 오류도 쉽게 해결하세요.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F4F7;</div>
+        <!-- 2 -->
+        <div class="feature-card" style="--card-accent: var(--violet);">
+          <div class="feature-icon" style="background:rgba(139,92,246,0.12);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-7.07-2.93l2.83-2.83m8.48-8.48l2.83-2.83M2 12h4m12 0h4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83"/></svg>
+          </div>
+          <div class="feat-tag" style="background:rgba(139,92,246,0.1); color:var(--violet);">Phase 2</div>
           <h3>AI 비전 스튜디오</h3>
-          <p>5종 ML/DL 알고리즘으로 이미지 분류 모델을 직접 학습하고, 데이터 분석 차트와 PCA 시각화로 AI를 이해합니다.</p>
+          <p>카메라로 데이터 수집부터 KNN/DNN/SVM 등 5종 알고리즘 학습, PCA 시각화까지. 브라우저에서 직접 AI 모델을 만듭니다.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#x1F4DD;</div>
-          <h3>IEC 61131-3 ST</h3>
-          <p>산업 표준 PLC 언어인 구조화 텍스트(ST)를 블록과 함께 학습합니다. CODESYS, TIA Portal 포맷으로 내보내기 가능합니다.</p>
+        <!-- 3 -->
+        <div class="feature-card" style="--card-accent: var(--pink);">
+          <div class="feature-icon" style="background:rgba(236,72,153,0.12);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h6M6 9v6m12-6v6M9 18h6"/></svg>
+          </div>
+          <div class="feat-tag" style="background:rgba(236,72,153,0.1); color:var(--pink);">v2.0 Coming</div>
+          <h3>노드 워크플로우</h3>
+          <p>AI 노드 + 하드웨어 노드를 자유롭게 연결하는 비주얼 캔버스. KitProfile 시스템으로 다양한 하드웨어 키트를 지원합니다.</p>
+        </div>
+        <!-- 4 -->
+        <div class="feature-card" style="--card-accent: var(--green);">
+          <div class="feature-icon" style="background:rgba(16,185,129,0.12);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          </div>
+          <div class="feat-tag" style="background:rgba(16,185,129,0.1); color:var(--green);">IEC 61131-3</div>
+          <h3>ST 코드 에디터</h3>
+          <p>산업 표준 구조화 텍스트(ST) 언어를 블록과 함께 학습합니다. CODESYS, TIA Portal SCL 포맷으로 내보내 실제 PLC에 적용 가능합니다.</p>
+        </div>
+        <!-- 5 -->
+        <div class="feature-card" style="--card-accent: var(--cyan);">
+          <div class="feature-icon" style="background:rgba(6,182,212,0.12);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06B6D4" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div class="feat-tag" style="background:rgba(6,182,212,0.1); color:var(--cyan);">Data</div>
+          <h3>데이터 분석</h3>
+          <p>수집된 센서 데이터와 이미지를 차트(히스토그램/히트맵/산점도)로 시각화하고, 데이터의 균형과 분포를 분석합니다.</p>
+        </div>
+        <!-- 6 -->
+        <div class="feature-card" style="--card-accent: var(--amber);">
+          <div class="feature-icon" style="background:rgba(245,158,11,0.12);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="feat-tag" style="background:rgba(245,158,11,0.1); color:var(--amber);">Safety</div>
+          <h3>교육용 안전 시스템</h3>
+          <p>E-STOP 긴급 정지, 속도 제한, 모터 과열 보호, 실행 전 안전 검증까지. 교육 환경에 최적화된 다중 안전 장치를 제공합니다.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Screenshots -->
-  <section id="screenshots">
+  <!-- Workflow Diagram -->
+  <section id="workflow" class="visual-section">
     <div class="container">
-      <div class="section-label">Screenshots</div>
-      <h2 class="section-title">한눈에 보는 팩토스튜디오</h2>
+      <div class="section-label violet">Physical AI Pipeline</div>
+      <h2 class="section-title">데이터에서 행동까지, 하나의 흐름</h2>
       <p class="section-desc">
-        카드 에디터, ST 코드 뷰어, 실시간 모니터링 화면을 확인하세요.
+        센서 데이터 수집 &rarr; AI 학습 &rarr; 실시간 판단 &rarr; 로봇 행동.
+        피지컬 AI의 전체 파이프라인을 시각적으로 설계합니다.
       </p>
-      <div class="screenshots-area" style="padding:40px 30px; text-align:left;">
-        <!-- 앱 구조도 — 한눈에 보는 팩토스튜디오 -->
-        <div style="display:grid; grid-template-columns:200px 1fr 220px; gap:12px; max-width:900px; margin:0 auto; font-size:13px;">
-          <!-- 헤더 -->
-          <div style="grid-column:1/-1; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); border-radius:10px; padding:10px 16px; display:flex; align-items:center; justify-content:space-between;">
-            <span style="font-weight:700; color:#3B82F6;">팩토스튜디오</span>
-            <div style="display:flex; gap:8px;">
-              <span style="background:rgba(59,130,246,0.2); padding:3px 10px; border-radius:6px; font-size:11px; color:#93C5FD;">블록</span>
-              <span style="background:rgba(139,92,246,0.2); padding:3px 10px; border-radius:6px; font-size:11px; color:#C4B5FD;">ST 코드</span>
-              <span style="background:rgba(236,72,153,0.2); padding:3px 10px; border-radius:6px; font-size:11px; color:#F9A8D4;">AI 비전</span>
-            </div>
-            <div style="display:flex; gap:6px;">
-              <span style="background:#22C55E; width:8px; height:8px; border-radius:50%; display:inline-block;"></span>
-              <span style="font-size:11px; color:#86EFAC;">▶ 실행</span>
-              <span style="background:#EF4444; width:24px; height:16px; border-radius:4px; display:inline-block; font-size:9px; color:white; text-align:center; line-height:16px;">E-STOP</span>
-            </div>
+      <div class="visual-diagram">
+        <div class="visual-title">
+          <h3>피지컬 AI 파이프라인</h3>
+          <p>데이터 수집부터 로봇 행동까지의 전체 흐름</p>
+        </div>
+        <div class="flow-row">
+          <div class="flow-node data">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:4px"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+            <br>데이터 수집
+            <span class="flow-sub">카메라 / 센서 / CSV</span>
           </div>
-          <!-- 좌: 팔레트 -->
-          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px;">
-            <div style="font-size:11px; font-weight:700; color:#9CA3AF; margin-bottom:8px;">팩토블록 팔레트</div>
-            <div style="display:flex; flex-direction:column; gap:4px;">
-              <div style="background:rgba(107,114,128,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #6B7280;">① 흐름 제어</div>
-              <div style="background:rgba(13,148,136,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #0D9488;">② 입력</div>
-              <div style="background:rgba(59,130,246,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #3B82F6;">③ 출력</div>
-              <div style="background:rgba(245,158,11,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #F59E0B;">④ 조건/분기</div>
-              <div style="background:rgba(16,185,129,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #10B981;">⑤ 타이머</div>
-              <div style="background:rgba(139,92,246,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #8B5CF6;">⑥ 변수</div>
-              <div style="background:rgba(167,139,250,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #A78BFA;">⑦ 서브루틴</div>
-              <div style="background:rgba(236,72,153,0.2); padding:4px 8px; border-radius:5px; font-size:11px; border-left:3px solid #EC4899;">⑧ AI 비전</div>
-            </div>
+          <span class="flow-arrow">&rarr;</span>
+          <div class="flow-node ai">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:4px"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-7.07-2.93l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+            <br>AI 학습
+            <span class="flow-sub">KNN / DNN / SVM / DT / LR</span>
           </div>
-          <!-- 중: 캔버스 -->
-          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px;">
-            <div style="font-size:11px; font-weight:700; color:#9CA3AF; margin-bottom:8px;">팩토조립소 — 플로우 캔버스</div>
-            <div style="display:flex; flex-direction:column; gap:3px; padding-left:12px; border-left:2px solid rgba(59,130,246,0.3);">
-              <div style="background:rgba(107,114,128,0.3); padding:4px 10px; border-radius:12px; font-size:11px; width:fit-content;">▶ 시작</div>
-              <div style="background:rgba(59,130,246,0.2); padding:4px 10px; border-radius:5px; font-size:11px; border-left:3px solid #3B82F6;">컨베이어 켜기</div>
-              <div style="background:rgba(13,148,136,0.2); padding:4px 10px; border-radius:5px; font-size:11px; border-left:3px solid #0D9488;">센서 감지 대기 <span style="color:#6B7280; font-size:10px;">10초</span></div>
-              <div style="background:rgba(59,130,246,0.2); padding:4px 10px; border-radius:5px; font-size:11px; border-left:3px solid #3B82F6;">컨베이어 끄기</div>
-              <div style="background:rgba(236,72,153,0.2); padding:4px 10px; border-radius:5px; font-size:11px; border-left:3px solid #EC4899;">🤖 AI 판별</div>
-              <div style="background:rgba(245,158,11,0.15); padding:4px 10px; border-radius:5px; font-size:11px; clip-path:polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%, 8px 50%); border-left:3px solid #F59E0B;">◆ 만약~이면 <span style="color:#6B7280; font-size:10px;">빨간색</span></div>
-              <div style="margin-left:16px; background:rgba(59,130,246,0.15); padding:3px 8px; border-radius:4px; font-size:10px; border-left:2px solid #3B82F6;">로봇 이동 → A 위치</div>
-              <div style="background:rgba(245,158,11,0.1); padding:3px 10px; border-radius:5px; font-size:10px; color:#F59E0B;">↔ 아니면</div>
-              <div style="margin-left:16px; background:rgba(59,130,246,0.15); padding:3px 8px; border-radius:4px; font-size:10px; border-left:2px solid #3B82F6;">로봇 이동 → B 위치</div>
-              <div style="background:rgba(245,158,11,0.1); padding:3px 10px; border-radius:5px; font-size:10px;">─ 만약~끝</div>
-              <div style="background:rgba(107,114,128,0.3); padding:4px 10px; border-radius:12px; font-size:11px; width:fit-content;">⏹ 끝</div>
-            </div>
+          <span class="flow-arrow">&rarr;</span>
+          <div class="flow-node control">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:4px"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            <br>판단 / 분기
+            <span class="flow-sub">조건 블록 / 워크플로우</span>
           </div>
-          <!-- 우: 모니터 -->
-          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px;">
-            <div style="display:flex; gap:4px; margin-bottom:8px;">
-              <span style="background:rgba(59,130,246,0.2); padding:2px 8px; border-radius:4px; font-size:10px; color:#93C5FD; border-bottom:2px solid #3B82F6;">시스템 현황</span>
-              <span style="background:rgba(139,92,246,0.1); padding:2px 8px; border-radius:4px; font-size:10px; color:#A78BFA;">AI 도우미</span>
-              <span style="background:rgba(16,185,129,0.1); padding:2px 8px; border-radius:4px; font-size:10px; color:#6EE7B7;">리포트</span>
-            </div>
-            <!-- 카메라 -->
-            <div style="background:#1a1a2e; border-radius:6px; padding:16px; text-align:center; margin-bottom:8px;">
-              <div style="font-size:20px;">📷</div>
-              <div style="font-size:9px; color:#6B7280; margin-top:4px;">카메라 뷰어</div>
-            </div>
-            <!-- 상태 -->
-            <div style="background:rgba(255,255,255,0.03); border-radius:6px; padding:8px; margin-bottom:6px; font-size:10px;">
-              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                <span style="color:#9CA3AF;">실행 상태</span>
-                <span style="color:#22C55E;">● 대기</span>
-              </div>
-              <div style="display:flex; gap:4px;">
-                <span style="color:#22C55E; font-size:9px;">● 로봇</span>
-                <span style="color:#3B82F6; font-size:9px;">● ESP32</span>
-                <span style="color:#8B5CF6; font-size:9px;">● 카메라</span>
-              </div>
-            </div>
-            <!-- AI 채팅 미리보기 -->
-            <div style="background:rgba(139,92,246,0.1); border-radius:6px; padding:8px; font-size:10px;">
-              <div style="color:#A78BFA; font-weight:600; margin-bottom:4px;">🤖 AI 도우미</div>
-              <div style="background:rgba(59,130,246,0.3); padding:4px 8px; border-radius:8px; color:#BFDBFE; font-size:9px; margin-bottom:3px; text-align:right;">물체를 색깔별로 분류해줘</div>
-              <div style="background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:8px; color:#D1D5DB; font-size:9px;">블록을 생성했습니다! 🧩</div>
-            </div>
+          <span class="flow-arrow">&rarr;</span>
+          <div class="flow-node hw">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:4px"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <br>로봇 행동
+            <span class="flow-sub">로봇팔 / 컨베이어 / GPIO</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- System Requirements -->
+  <!-- Hardware Kits -->
+  <section id="kits">
+    <div class="container">
+      <div class="section-label green">Hardware Kits</div>
+      <h2 class="section-title">다양한 하드웨어 키트 지원</h2>
+      <p class="section-desc">
+        KitProfile 시스템으로 하드웨어를 자유롭게 확장합니다.
+        로봇팔 키트를 시작으로, 다양한 산업 시나리오를 지원할 예정입니다.
+      </p>
+      <div class="kit-grid">
+        <div class="kit-card">
+          <div class="kit-icon">&#x1F9BE;</div>
+          <h3>로봇팔 분류 키트</h3>
+          <p>UFactory Lite 6 + 컨베이어 + ESP32-CAM. AI 비전으로 물체를 분류하고, 로봇팔이 위치별로 분류하는 자동화 라인입니다.</p>
+          <div class="kit-tags">
+            <span class="kit-tag">로봇팔</span>
+            <span class="kit-tag">컨베이어</span>
+            <span class="kit-tag green">AI 비전</span>
+          </div>
+        </div>
+        <div class="kit-card">
+          <div class="kit-icon">&#x1F50B;</div>
+          <h3>배터리 조립 키트</h3>
+          <p>셀 정렬 &rarr; 전압 검사 &rarr; 불량 분류. 배터리 팩 조립 공정을 시뮬레이션하며 품질 관리 자동화를 학습합니다.</p>
+          <div class="kit-tags">
+            <span class="kit-tag violet">시뮬레이션</span>
+            <span class="kit-tag amber">품질 관리</span>
+          </div>
+        </div>
+        <div class="kit-card">
+          <div class="kit-icon">&#x1F69C;</div>
+          <h3>AGV 물류 키트</h3>
+          <p>자율주행 로봇(AGV)이 경로를 탐색하며 물류를 운반합니다. 경로 최적화와 장애물 회피를 AI로 학습합니다.</p>
+          <div class="kit-tags">
+            <span class="kit-tag violet">계획 중</span>
+            <span class="kit-tag green">자율주행</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Learning Path -->
+  <section id="path">
+    <div class="container">
+      <div class="section-label pink">Learning Path</div>
+      <h2 class="section-title">초등학생부터 산업 현장까지</h2>
+      <p class="section-desc">
+        같은 플랫폼에서 단계를 올리며 성장합니다.
+        카드 코딩에서 시작해 AI + 하드웨어를 통합하는 전문가로.
+      </p>
+      <div class="path-grid">
+        <div class="path-card">
+          <div class="path-num">1</div>
+          <h4>카드 코딩</h4>
+          <p class="path-target">초등 고학년</p>
+          <p>드래그앤드롭으로 블록을 조합하며 순차/반복/조건 등 프로그래밍 기초를 학습합니다.</p>
+        </div>
+        <div class="path-card">
+          <div class="path-num">2</div>
+          <h4>AI 비전</h4>
+          <p class="path-target">중학생</p>
+          <p>카메라로 데이터를 수집하고 AI 모델을 직접 학습시켜 분류 자동화를 구현합니다.</p>
+        </div>
+        <div class="path-card">
+          <div class="path-num">3</div>
+          <h4>ST 코드</h4>
+          <p class="path-target">고등학생</p>
+          <p>산업 표준 IEC 61131-3 ST 언어로 텍스트 코딩에 입문합니다. 실제 PLC와 호환됩니다.</p>
+        </div>
+        <div class="path-card">
+          <div class="path-num">4</div>
+          <h4>노드 워크플로우</h4>
+          <p class="path-target">대학 / 산업</p>
+          <p>AI + 하드웨어를 노드로 연결하는 비주얼 프로그래밍. 실제 산업 자동화 시나리오를 설계합니다.</p>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat">
+          <div class="num">53+</div>
+          <div class="label">블록 카드</div>
+        </div>
+        <div class="stat">
+          <div class="num">5</div>
+          <div class="label">ML/DL 알고리즘</div>
+        </div>
+        <div class="stat">
+          <div class="num">3</div>
+          <div class="label">에디터 모드</div>
+        </div>
+        <div class="stat">
+          <div class="num">4</div>
+          <div class="label">학습 단계</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Requirements -->
   <section id="requirements">
     <div class="container">
-      <div class="section-label">System Requirements</div>
+      <div class="section-label amber">Requirements</div>
       <h2 class="section-title">시스템 요구사항</h2>
       <p class="section-desc">
-        시뮬레이션 모드로 하드웨어 없이도 모든 기능을 체험할 수 있습니다.
+        시뮬레이션 모드로 하드웨어 없이도 AI 학습부터 블록 코딩까지 모든 기능을 체험할 수 있습니다.
       </p>
       <div class="req-grid">
         <div class="req-card">
           <h3>&#x1F4BB; 소프트웨어</h3>
           <ul>
             <li>macOS 12 Monterey 이상 (Apple Silicon / Intel)</li>
-            <li class="coming-soon">Windows 10 / 11 <span class="badge-soon">Coming Soon</span></li>
+            <li>Windows 10 / 11 (64-bit)</li>
             <li>디스크 공간 500MB 이상</li>
             <li>RAM 4GB 이상 (8GB 권장)</li>
           </ul>
@@ -504,16 +665,16 @@
           <ul>
             <li>UFactory Lite 6 로봇팔</li>
             <li>ESP32 + TB6600 스텝모터 컨베이어</li>
-            <li>ESP32-CAM (MJPEG 스트림)</li>
+            <li>ESP32-CAM (MJPEG 스트림 + AI 비전)</li>
             <li>E18-D80NK 적외선 센서</li>
           </ul>
         </div>
         <div class="req-card">
-          <h3>&#x1F4E1; 네트워크</h3>
+          <h3>&#x1F310; 네트워크</h3>
           <ul>
-            <li>로봇: LAN 직결 (192.168.1.x)</li>
-            <li>카메라: Wi-Fi 연결</li>
-            <li>컨베이어: USB Serial</li>
+            <li>로봇: LAN 직결 (TCP/IP)</li>
+            <li>카메라: Wi-Fi (HTTP)</li>
+            <li>컨베이어: USB Serial (115200bps)</li>
             <li>인터넷 연결 불필요 (오프라인 사용 가능)</li>
           </ul>
         </div>
@@ -524,11 +685,14 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <div class="copyright">&copy; 2026 FACTO Studio Team. All rights reserved.</div>
+      <div class="footer-left">
+        <div class="footer-brand"><span>FACTO</span> Studio</div>
+        <div class="copyright">&copy; 2026 FACTO Studio Team. All rights reserved.</div>
+      </div>
       <div class="footer-links">
-        <a href="https://github.com/85artihoya/factostudio-releases">GitHub</a>
+        <a href="https://github.com/85artihoya/factostudio-releases" target="_blank">GitHub</a>
+        <a href="https://github.com/85artihoya/factostudio-releases/releases" target="_blank">Releases</a>
         <a href="mailto:contact@example.com">Contact</a>
-        <a href="#">Documentation</a>
       </div>
     </div>
   </footer>
